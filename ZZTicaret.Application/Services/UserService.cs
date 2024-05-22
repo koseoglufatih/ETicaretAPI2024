@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ZZTicaret.Application.DTO.Order;
 using ZZTicaret.Application.DTO.User;
 using ZZTicaret.Application.Repositories;
 using ZZTicaret.Domain;
@@ -44,9 +45,10 @@ namespace ZZTicaret.Application.Services
 
         }
 
-        public async Task<List<User>> GetAllUsers()
+        public async Task<List<UserViewModel>> GetAllOrders()
         {
-            return await _userRepository.GetAllAsync();
+            var orders = await _userRepository.GetAllAsync();
+            return new List<UserViewModel>();
         }
 
         public async Task<User> GetUserById(Guid userId)

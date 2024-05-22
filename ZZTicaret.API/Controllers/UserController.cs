@@ -2,15 +2,12 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using ZZTicaret.Application.Features.Commands.Basket.AddProductToBasket;
-using ZZTicaret.Application.Features.Commands.Basket.RemoveBasketItem;
 using ZZTicaret.Application.Features.Commands.Product.Create;
 using ZZTicaret.Application.Features.Commands.Product.Remove;
 using ZZTicaret.Application.Features.Commands.Product.Update;
 using ZZTicaret.Application.Features.Commands.User.Create;
 using ZZTicaret.Application.Features.Commands.User.Delete;
 using ZZTicaret.Application.Features.Commands.User.Update;
-using ZZTicaret.Application.Features.Queries.Basket.GetBasketItems;
 using ZZTicaret.Application.Features.Queries.Product.GetAllProduct;
 using ZZTicaret.Application.Features.Queries.Product.GetByCategoryId;
 using ZZTicaret.Application.Features.Queries.Product.GetByIdProduct;

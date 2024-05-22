@@ -20,7 +20,9 @@ namespace ZZTicaret.Persistence.Repositories
 
         public async Task<GetAllOrdersQueryResponse> GetAllOrders()
         {
-            var orders = await _context.Orders.Include(x => x.User)
+            var orders = await _context.Orders
+                .Include(x => x.User)
+                .Include(u=> u.OrderDetails)
             .ToListAsync();
                 
                 

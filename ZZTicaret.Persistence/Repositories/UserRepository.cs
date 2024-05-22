@@ -24,7 +24,9 @@ namespace ZZTicaret.Persistence.Repositories
 
         public async Task<GetAllUserQueryResponse> GetAllUsers()
         {
-            var users =  await _context.Users.Include(x=> x.Orders).ToListAsync();
+            var users =  await _context.Users
+                .Include(x=> x.Orders)
+                .ThenInclude(o=>o.OrderDetails).ToListAsync();
             return new GetAllUserQueryResponse
             {
                 Users = users

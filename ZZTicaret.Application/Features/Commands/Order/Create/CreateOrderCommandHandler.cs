@@ -17,7 +17,7 @@ namespace ZZTicaret.Application.Features.Commands.Order.Create
 
             var neworder = new Domain.Order()
             {
-                Id = new Guid(),
+                Id = Guid.NewGuid(),
                 CreateDate = DateTime.Now,
                 UserId = request.UserId,
                 OrderDate = DateTime.Now,
@@ -31,7 +31,7 @@ namespace ZZTicaret.Application.Features.Commands.Order.Create
                 neworder.OrderDetails.Add(new Domain.OrderDetail()
                 {
 
-                    Id = new Guid(),
+                    Id = Guid.NewGuid(),
                     ProductId = item.ProductId,
                     Price = item.Price,
                     Quantity = item.Quantity

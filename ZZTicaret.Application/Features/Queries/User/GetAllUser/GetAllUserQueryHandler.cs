@@ -21,9 +21,16 @@ namespace ZZTicaret.Application.Features.Queries.User.GetAllUser
             _userRepository = userRepository;
         }
 
+
+
         public async Task<GetAllUserQueryResponse> Handle(GetAllUserQueryRequest request, CancellationToken cancellationToken)
         {
-            return null;
+
+            var users = await _userRepository.GetAllUsers();
+            return new GetAllUserQueryResponse()
+            {
+                Users = users
+            };
         }
     }
 }
