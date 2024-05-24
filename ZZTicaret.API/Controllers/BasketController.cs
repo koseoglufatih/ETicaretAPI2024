@@ -5,6 +5,7 @@ using ZZTicaret.Application.Features.Commands.Basket.AddItemToBasket;
 using ZZTicaret.Application.Features.Commands.Category.Create;
 using ZZTicaret.Application.Features.Commands.Category.Remove;
 using ZZTicaret.Application.Features.Commands.Category.Update;
+using ZZTicaret.Application.Features.Queries.Basket;
 using ZZTicaret.Application.Features.Queries.Category.GetAllCategory;
 using ZZTicaret.Application.Features.Queries.Category.GetByIdCategory;
 
@@ -31,8 +32,16 @@ namespace ZZTicaret.API.Controllers
             return Ok(response);
         }
 
-        
+
+        [HttpGet("{Id}")]
+
+        public async Task<IActionResult> GetBasketByUserId([FromRoute] GetBasketByUserIdCommandRequest getBasketByUserIdCommandRequest)
+        {
+            GetBasketByUserIdCommandResponse response = await _mediator.Send(getBasketByUserIdCommandRequest);
+            return Ok(response);
         }
+
+    }
  }
 
 

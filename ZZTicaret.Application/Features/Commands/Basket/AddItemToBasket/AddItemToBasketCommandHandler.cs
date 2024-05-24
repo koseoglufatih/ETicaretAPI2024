@@ -25,22 +25,22 @@ namespace ZZTicaret.Application.Features.Commands.Basket.AddItemToBasket
             {
                 Id = Guid.NewGuid(),
                 UserId = request.UserId,
-                //BasketItems = new List<BasketItem>()
+                BasketItems = new List<BasketItem>()
             };
 
             await _basketrepository.AddAsync(basket);
 
 
-            //var basketItem = new BasketItem
-            //{
-            //    Id = Guid.NewGuid(),
-            //     ProductId = request.ProductId,
-            //     Quantity = request.Quantity,
-            //     Basket = basket
-                 
-            //};
+            var basketItem = new BasketItem
+            {
+                Id = Guid.NewGuid(),
+                ProductId = request.ProductId,
+                Quantity = request.Quantity,
+                Basket = basket
 
-            //basket.BasketItems.Add(basketItem);
+            };
+
+            basket.BasketItems.Add(basketItem);
             await _basketrepository.SaveAsync();
 
             return new AddItemToBasketCommandResponse

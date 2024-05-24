@@ -8,9 +8,11 @@ namespace ZZTicaret.Application.DTO.Basket
 {
     public class BasketItemDTO
     {
-        public Guid ProductId { get; set; }
+        public Guid BasketId { get; set; }
         public string ProductName { get; set; }
         public int Quantity { get; set; }
+
+        public decimal TotalAmount { get; set; }
         public decimal Price { get; set; }
       
     }

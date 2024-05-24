@@ -49,6 +49,7 @@ namespace ZZTicaret.Application.Features.Commands.Order.Create
 
                 Message = "Sipariş Oluşturuldu. Sipariş Id: " + neworder.Id,
                 Success = true,
+                TotalAmount = neworder.TotalAmount
             };
 
 
