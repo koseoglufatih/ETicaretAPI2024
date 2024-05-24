@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 using ZZTicaret.Application.Features.Commands.Basket.AddItemToBasket;
@@ -14,7 +15,6 @@ namespace ZZTicaret.Persistence.Repositories
 {
     public class BasketRepository : Repository<Basket>, IBasketRepository
     {
-
         private readonly ZZTicaretContext _context;
         public BasketRepository(ZZTicaretContext context) : base(context)
         {
@@ -23,20 +23,24 @@ namespace ZZTicaret.Persistence.Repositories
 
         public async Task<AddItemToBasketCommandResponse> AddItemToBasket(Guid UserId)
         {
-            var basket = await _context.Baskets
-                .Include(b => b.User)
-                .ThenInclude(o=> o.Orders)
-                .FirstOrDefaultAsync(o=>o.UserId == UserId);
+            await _context.Baskets
+            .Include(b => b.BasketItems)
+            .FirstOrDefaultAsync(b => b.UserId == UserId);
 
             return new AddItemToBasketCommandResponse
             {
-                Message = "Sepet başarılı",
-                Success = true,
+                Message = "Sepete başarıyla ürün eklendi",
+
+                Success = true
+
+
             };
 
-           
-
-
         }
+
+
+
+
     }
 }
+
