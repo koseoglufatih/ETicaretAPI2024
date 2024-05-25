@@ -23,41 +23,36 @@ namespace ZZTicaret.Application.Features.Commands.Basket.AddItemToBasket
         {
             var response = new AddItemToBasketCommandResponse();
 
-            try
-            {
+           
                 var basket = await _basketRepository.GetByIdAsync(request.UserId);
                 if (basket == null)
                 {
                     basket = new Domain.Basket
                     {
+                        Id = Guid.NewGuid(),
                         UserId = request.UserId,
                         BasketItems = new List<BasketItem>()
                     };
                 }
 
                 await _basketRepository.AddAsync(basket);
-                await _basketRepository.SaveAsync();
+             
+
 
                 var basketItems = new BasketItem
                 {
+                    Id = basket.Id,
                     ProductId = request.ProductId,
                     Quantity = request.Quantity,
+                     
+                };
 
-                };        
-
+              
 
                 response.Success = true;
                 response.Message = "Item added to basket successfully.";
 
-              
-
-            }
-            catch (Exception ex)
-            {
-
-                response.Success = false;
-                response.Message = $"An error occurred: {ex.Message}";
-            }
+ 
 
             return response;
 

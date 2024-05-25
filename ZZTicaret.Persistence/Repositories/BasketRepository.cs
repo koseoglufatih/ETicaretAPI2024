@@ -31,7 +31,10 @@ namespace ZZTicaret.Persistence.Repositories
         public async Task<GetAllBasketsQueryResponse> GetAllBaskets()
         {
             var baskets = await _context.Baskets
-                 .Include(b => b.BasketItems).ToListAsync();
+                .Include(b=>b.User)
+                .ThenInclude(b=>b.Orders)
+                 .ThenInclude(b => b.OrderDetails)
+                 .Include(o=> o.BasketItems).ToListAsync();
 
             return new GetAllBasketsQueryResponse
             {
