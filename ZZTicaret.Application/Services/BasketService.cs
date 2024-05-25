@@ -2,21 +2,33 @@
 using System.Reflection.Metadata.Ecma335;
 using ZZTicaret.Application.DTO.Basket;
 using ZZTicaret.Application.Features.Commands.Basket.AddItemToBasket;
+using ZZTicaret.Application.Features.Queries.Basket.GetAllBaskets;
 using ZZTicaret.Application.Repositories;
 using ZZTicaret.Domain;
 
 namespace ZZTicaret.Application.Services
 {
+   
     public class BasketService : IBasketService
     {
-        public Task AddItemToBasketAsync(BasketItemDTO basketItem)
+        readonly IBasketRepository _basketRepository;
+
+        public BasketService(IBasketRepository basketRepository)
         {
-            throw new NotImplementedException();
+            _basketRepository = basketRepository;
         }
 
-        public Task<List<BasketItem>> GetBasketItemsAsync()
+        public async Task<AddItemToBasketCommandResponse> AddItemToBasket(Guid UserId)
         {
-            throw new NotImplementedException();
+            await _basketRepository.AddItemToBasket(UserId);
+            await _basketRepository.SaveAsync();
+            return new AddItemToBasketCommandResponse();
+        }
+
+        public async Task<GetAllBasketsQueryResponse> GetAllBaskets()
+        {
+            await _basketRepository.GetAllBaskets();
+            return new GetAllBasketsQueryResponse();
         }
     }
 

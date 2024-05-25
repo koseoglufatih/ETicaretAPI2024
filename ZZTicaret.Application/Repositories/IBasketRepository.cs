@@ -14,6 +14,7 @@ namespace ZZTicaret.Application.Repositories
     {
        
         Task<GetAllBasketsQueryResponse> GetAllBaskets();
+        Task<AddItemToBasketCommandResponse> AddItemToBasket(Guid UserId);
        
        
     }
