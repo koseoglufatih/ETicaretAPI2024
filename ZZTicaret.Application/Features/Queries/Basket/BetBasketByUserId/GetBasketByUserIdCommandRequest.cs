@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using ZZTicaret.Application.DTO.Basket;
 
-namespace ZZTicaret.Application.Features.Queries.Basket
+namespace ZZTicaret.Application.Features.Queries.Basket.BetBasketByUserId
 {
     public class GetBasketByUserIdCommandRequest : IRequest<GetBasketByUserIdCommandResponse>
     {

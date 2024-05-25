@@ -9,25 +9,18 @@ namespace ZZTicaret.Application.Services
 {
     public class BasketService : IBasketService
     {
-        readonly IBasketRepository _basketRepository;
-
-        public BasketService(IBasketRepository basketRepository)
+        public Task AddItemToBasketAsync(BasketItemDTO basketItem)
         {
-            _basketRepository = basketRepository;
+            throw new NotImplementedException();
         }
 
-        public async Task AddItemToBasket(Guid UserId)
+        public Task<List<BasketItem>> GetBasketItemsAsync()
         {
-            await _basketRepository.AddItemToBasket(UserId);
-            await _basketRepository.SaveAsync();
+            throw new NotImplementedException();
         }
-
-      
-
-       
     }
 
-   
+
 }
 
 

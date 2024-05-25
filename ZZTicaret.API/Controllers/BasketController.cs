@@ -5,7 +5,7 @@ using ZZTicaret.Application.Features.Commands.Basket.AddItemToBasket;
 using ZZTicaret.Application.Features.Commands.Category.Create;
 using ZZTicaret.Application.Features.Commands.Category.Remove;
 using ZZTicaret.Application.Features.Commands.Category.Update;
-using ZZTicaret.Application.Features.Queries.Basket;
+using ZZTicaret.Application.Features.Queries.Basket.BetBasketByUserId;
 using ZZTicaret.Application.Features.Queries.Category.GetAllCategory;
 using ZZTicaret.Application.Features.Queries.Category.GetByIdCategory;
 

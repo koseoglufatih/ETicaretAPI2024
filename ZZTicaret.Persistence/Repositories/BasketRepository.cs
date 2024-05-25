@@ -1,13 +1,6 @@
-﻿using Azure.Core;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata.Ecma335;
-using System.Text;
-using System.Threading.Tasks;
-using ZZTicaret.Application.Features.Commands.Basket.AddItemToBasket;
-using ZZTicaret.Application.Features.Queries.Order.GetAllOrder;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Runtime.CompilerServices;
+using ZZTicaret.Application.Features.Queries.Basket.GetAllBaskets;
 using ZZTicaret.Application.Repositories;
 using ZZTicaret.Domain;
 
@@ -21,26 +14,18 @@ namespace ZZTicaret.Persistence.Repositories
             _context = context;
         }
 
-        public async Task<AddItemToBasketCommandResponse> AddItemToBasket(Guid UserId)
+        public async Task<GetAllBasketsQueryResponse> GetAllBaskets()
         {
-            await _context.Baskets
-            .Include(b => b.BasketItems)
-            .FirstOrDefaultAsync(b => b.UserId == UserId);
+            var baskets = await _context.Baskets
+                 .Include(b => b.BasketItems).ToListAsync();
 
-            return new AddItemToBasketCommandResponse
+            return new GetAllBasketsQueryResponse
             {
-                Message = "Sepete başarıyla ürün eklendi",
-
-                Success = true
-
-
+                Baskets = baskets
             };
 
+                
         }
-
-
-
-
     }
 }
 

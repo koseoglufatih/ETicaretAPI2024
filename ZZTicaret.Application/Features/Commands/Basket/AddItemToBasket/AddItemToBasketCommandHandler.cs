@@ -9,46 +9,63 @@ using ZZTicaret.Domain;
 
 namespace ZZTicaret.Application.Features.Commands.Basket.AddItemToBasket
 {
+   
     public class AddItemToBasketCommandHandler : IRequestHandler<AddItemToBasketCommandRequest, AddItemToBasketCommandResponse>
     {
+        readonly IBasketRepository _basketRepository;
 
-        private IBasketRepository _basketrepository;
-
-        public AddItemToBasketCommandHandler(IBasketRepository basketrepository)
+        public AddItemToBasketCommandHandler(IBasketRepository basketRepository)
         {
-            _basketrepository = basketrepository;
+            _basketRepository = basketRepository;
         }
 
         public async Task<AddItemToBasketCommandResponse> Handle(AddItemToBasketCommandRequest request, CancellationToken cancellationToken)
         {
-            var basket = new Domain.Basket
+            var response = new AddItemToBasketCommandResponse();
+
+            try
             {
-                Id = Guid.NewGuid(),
-                UserId = request.UserId,
-                BasketItems = new List<BasketItem>()
-            };
+                var basket = await _basketRepository.GetByIdAsync(request.UserId);
+                if (basket == null)
+                {
+                    basket = new Domain.Basket
+                    {
+                        UserId = request.UserId,
+                        BasketItems = new List<BasketItem>()
+                    };
+                }
 
-            await _basketrepository.AddAsync(basket);
+                await _basketRepository.AddAsync(basket);
+                await _basketRepository.SaveAsync();
+
+                var basketItems = new BasketItem
+                {
+                    ProductId = request.ProductId,
+                    Quantity = request.Quantity,
+
+                };        
 
 
-            var basketItem = new BasketItem
+                response.Success = true;
+                response.Message = "Item added to basket successfully.";
+
+              
+
+            }
+            catch (Exception ex)
             {
-                Id = Guid.NewGuid(),
-                ProductId = request.ProductId,
-                Quantity = request.Quantity,
-                Basket = basket
 
-            };
+                response.Success = false;
+                response.Message = $"An error occurred: {ex.Message}";
+            }
 
-            basket.BasketItems.Add(basketItem);
-            await _basketrepository.SaveAsync();
+            return response;
 
-            return new AddItemToBasketCommandResponse
-            {
-                Success = true,
-                Message = "Ürün Sepete başarılı bir şekilde eklenmiştir."
-            };
-
-    }
+        }
     }
 }
+
+
+
+
+

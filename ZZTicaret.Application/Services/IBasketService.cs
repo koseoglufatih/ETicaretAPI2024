@@ -12,7 +12,8 @@ namespace ZZTicaret.Application.Services
     public interface IBasketService
     {
 
-        Task AddItemToBasket(Guid UserId);
+        public Task<List<BasketItem>> GetBasketItemsAsync();
+        public Task AddItemToBasketAsync(BasketItemDTO basketItem);
 
     }
 }
