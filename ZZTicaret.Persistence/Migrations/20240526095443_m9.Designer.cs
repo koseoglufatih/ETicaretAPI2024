@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ZZTicaret.Persistence;
 
@@ -11,9 +12,11 @@ using ZZTicaret.Persistence;
 namespace ZZTicaret.Persistence.Migrations
 {
     [DbContext(typeof(ZZTicaretContext))]
-    partial class ZZTicaretContextModelSnapshot : ModelSnapshot
+    [Migration("20240526095443_m9")]
+    partial class m9
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

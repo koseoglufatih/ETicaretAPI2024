@@ -25,6 +25,21 @@ namespace ZZTicaret.API.Controllers
             _mediator = mediator;
         }
 
+        [HttpGet]
+
+        public async Task<IActionResult> GetAllBasket([FromRoute] GetAllBasketsQueryRequest getAllBasketsQueryRequest)
+        {
+            GetAllBasketsQueryResponse response = await _mediator.Send(getAllBasketsQueryRequest);
+            return Ok(response);
+        }
+
+        [HttpGet("{Id}")]
+
+        public async Task<IActionResult> GetBasketByUserId([FromRoute] GetBasketByUserIdCommandRequest getBasketByUserIdRequest)
+        {
+            GetBasketByUserIdCommandResponse response = await _mediator.Send(getBasketByUserIdRequest);
+            return Ok(response);
+        }
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] AddItemToBasketCommandRequest addItemToBasketCommandRequest)
@@ -34,13 +49,7 @@ namespace ZZTicaret.API.Controllers
         }
 
 
-        [HttpGet]
-
-        public async Task<IActionResult> GetALlBasket([FromRoute] GetAllBasketsQueryRequest getAllBasketsQueryRequest)
-        {
-            GetAllBasketsQueryResponse response = await _mediator.Send(getAllBasketsQueryRequest);
-            return Ok(response);
-        }
+      
 
     }
  }

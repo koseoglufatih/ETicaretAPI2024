@@ -9,5 +9,8 @@ namespace ZZTicaret.Application.Repositories
 {
     public interface IBasketItemRepository : IRepository<BasketItem>
     {
+        Task AddAsync(BasketItem basketItem);
+        Task<List<BasketItem>> GetBasketByUserIdAsync(Guid UserId);
+
     }
 }

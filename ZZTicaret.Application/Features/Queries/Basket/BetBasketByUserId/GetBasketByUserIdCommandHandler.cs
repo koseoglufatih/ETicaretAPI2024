@@ -15,19 +15,23 @@ namespace ZZTicaret.Application.Features.Queries.Basket.BetBasketByUserId
     {
 
         private readonly IBasketRepository _basketRepository;
+        private readonly IBasketItemRepository _basketItemRepository;
 
-        public GetBasketByUserIdCommandHandler(IBasketRepository basketRepository)
+        public GetBasketByUserIdCommandHandler(IBasketRepository basketRepository, IBasketItemRepository basketItemRepository)
         {
             _basketRepository = basketRepository;
+            _basketItemRepository = basketItemRepository;
         }
 
         public async Task<GetBasketByUserIdCommandResponse> Handle(GetBasketByUserIdCommandRequest request, CancellationToken cancellationToken)
         {
 
-            Domain.Basket? basket = await _basketRepository._dbSet
-                .Include(b => b.User)
-                .Include(u => u.BasketItems)
-                .Where(bi => bi.UserId == request.UserId).FirstOrDefaultAsync();
+            Domain.Basket? basket = await _basketRepository.GetByIdAsync(request.UserId);
+
+
+                //.Include(b => b.User)
+                //.Include(u => u.BasketItems)
+                //.Where(bi => bi.UserId == request.UserId).FirstOrDefaultAsync();
 
             if (basket == null)
             {

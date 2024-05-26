@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using ZZTicaret.Application.DTO.Basket;
 using ZZTicaret.Application.DTO.User;
 using ZZTicaret.Application.Repositories;
+using ZZTicaret.Domain;
 
 namespace ZZTicaret.Application.Features.Queries.Basket.GetAllBaskets
 {
@@ -23,20 +24,40 @@ namespace ZZTicaret.Application.Features.Queries.Basket.GetAllBaskets
         {
             var baskets = await _basketRepository.GetAllAsync();
 
-            var basketDtos = baskets.Select(b => new BasketDto
+            if (baskets == null)
             {
-                UserId = b.UserId,
-                BasketItems = b.BasketItems.Select(i => new BasketItemDTO
+                throw new BasketNotFoundException();
+            }
+
+            var basketDtos = baskets.Select(b =>
+            {
+                if (b.BasketItems == null)
                 {
-                    ProductId = i.ProductId,
-                    Quantity = i.Quantity,
-                    Price = i.Price
-                }).ToList(),
-                User = new UserDto
-                {
-                    NameSurname = b.User.NameSurname,
-                    Email = b.User.Email
+                    Console.WriteLine($"Kullanıcıya ait {b.UserId} basketitem bulunamadı.");
                 }
+
+                if (b.User == null)
+                {
+                    Console.WriteLine($"Sepete ait {b.UserId} kullanıcı bulunamadı.");
+                }
+
+                return new BasketDto
+                {
+
+                    UserId = b.UserId,
+                    BasketItems = b.BasketItems?.Select(i => new BasketItemDTO
+                    {
+                        ProductId = i.ProductId,
+                        Quantity = i.Quantity,
+                        Price = i.Price
+                    }).ToList() ?? new List<BasketItemDTO>(),
+
+                    User = b.User != null ? new UserDto
+                    {
+                        NameSurname = b.User.NameSurname,
+                        Email = b.User.Email
+                    } : null
+                };
             }).ToList();
 
             return new GetAllBasketsQueryResponse()

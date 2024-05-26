@@ -53,6 +53,15 @@ namespace ZZTicaret.Persistence.Repositories
 
             return new GetAllBasketsQueryResponse { Baskets = baskets };
         }
+
+        public async Task<Basket> GetByIdAsync(Guid userId)
+        {
+            return await _context.Baskets
+                .Include(b => b.BasketItems)
+                .ThenInclude(bi => bi.Product)
+                .FirstOrDefaultAsync(p => p.UserId == userId);
+
+        }
     }
 }
                
