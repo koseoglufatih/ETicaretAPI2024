@@ -32,6 +32,7 @@ namespace ZZTicaret.Application.Features.Commands.User.Create
                NameSurname = request.Name,
                Email = request.Email,   
                Password = request.Password,
+               CreateDate = request.CreateDate
             };
 
             await _userRepository.AddAsync(user);

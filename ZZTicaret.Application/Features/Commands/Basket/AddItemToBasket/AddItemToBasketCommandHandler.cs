@@ -24,37 +24,34 @@ namespace ZZTicaret.Application.Features.Commands.Basket.AddItemToBasket
 
         public async Task<AddItemToBasketCommandResponse> Handle(AddItemToBasketCommandRequest request, CancellationToken cancellationToken)
         {
+            var response = new AddItemToBasketCommandResponse();
+
            
-            var basket = await _basketRepository.GetByIdAsync(request.UserId);
-            if (basket == null)
-            {
-                basket = new Domain.Basket
-                {
-                    Id = Guid.NewGuid(),
-                    UserId = request.UserId,
-                    BasketItems = new List<BasketItem>()
-                };
-            }
-
-            await _basketRepository.AddAsync(basket);
-
-            var basketItems = new BasketItem
+            var basket = new Domain.Basket
             {
                 Id = Guid.NewGuid(),
-                BasketId = basket.Id,
+                UserId = request.UserId,
+                BasketItems = new List<BasketItem>()
+            };
+
+            await _basketRepository.AddAsync(basket);
+            await _basketRepository.SaveAsync();
+
+            // Yeni bir sepet öğesi oluştur
+            var basketItem = new BasketItem
+            {
+                Id = Guid.NewGuid(), 
+                BasketId = basket.Id, 
                 ProductId = request.ProductId,
                 Quantity = request.Quantity,
-                Price = request.Price,
-
+                Price = request.Price
             };
 
-            await _basketitemRepository.AddAsync(basketItems);
+            await _basketitemRepository.AddAsync(basketItem);
+            await _basketitemRepository.SaveAsync();
 
-            var response = new AddItemToBasketCommandResponse
-            {
-                Message = "Sepete ürün başarıyla eklendi",
-                Success = true,
-            };
+            response.Success = true;
+            response.Message = "Item added to basket successfully.";
 
             return response;
 

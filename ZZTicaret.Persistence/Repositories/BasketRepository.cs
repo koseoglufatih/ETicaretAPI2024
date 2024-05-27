@@ -19,7 +19,7 @@ namespace ZZTicaret.Persistence.Repositories
 
         public async Task<AddItemToBasketCommandResponse> AddItemToBasket(Guid UserId)
         {
-            var addBasketItem = await _context.Baskets.Include(b => b.User).ThenInclude(u => u.Orders).FirstOrDefaultAsync(o => o.UserId == UserId);
+            var addBasketItem = await _context.Baskets.Include(b => b.BasketItems).FirstOrDefaultAsync(bi => bi.Id== UserId);
             return new AddItemToBasketCommandResponse
             {
                 Message = "Sepete başarıyla ürün eklendi.",
@@ -56,10 +56,12 @@ namespace ZZTicaret.Persistence.Repositories
 
         public async Task<Basket> GetByIdAsync(Guid userId)
         {
+
+
+
             return await _context.Baskets
-                .Include(b => b.BasketItems)
-                .ThenInclude(bi => bi.Product)
-                .FirstOrDefaultAsync(p => p.UserId == userId);
+                .Include(b => b.User)
+                .FirstOrDefaultAsync(u => u.Id == userId);
 
         }
     }
